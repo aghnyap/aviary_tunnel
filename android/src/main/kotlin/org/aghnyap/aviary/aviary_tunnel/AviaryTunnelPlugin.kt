@@ -1,5 +1,6 @@
 package org.aghnyap.aviary.aviary_tunnel
 
+import MessengerHostApi
 import androidx.annotation.NonNull
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin
@@ -9,7 +10,7 @@ import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 
 /** AviaryTunnelPlugin */
-class AviaryTunnelPlugin: FlutterPlugin, MethodCallHandler {
+class AviaryTunnelPlugin: FlutterPlugin, MethodCallHandler, MessengerHostApi {
   /// The MethodChannel that will the communication between Flutter and native Android
   ///
   /// This local reference serves to register the plugin with the Flutter Engine and unregister it
@@ -19,6 +20,8 @@ class AviaryTunnelPlugin: FlutterPlugin, MethodCallHandler {
   override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
     channel = MethodChannel(flutterPluginBinding.binaryMessenger, "aviary_tunnel")
     channel.setMethodCallHandler(this)
+
+    MessengerHostApi.setUp(flutterPluginBinding.binaryMessenger, this)
   }
 
   override fun onMethodCall(call: MethodCall, result: Result) {
@@ -31,5 +34,11 @@ class AviaryTunnelPlugin: FlutterPlugin, MethodCallHandler {
 
   override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
     channel.setMethodCallHandler(null)
+
+    MessengerHostApi.setUp(binding.binaryMessenger, null)
+  }
+
+  override fun getPlatformVersion(callback: (kotlin.Result<String?>) -> Unit) {
+    callback(kotlin.Result.success("Android ${android.os.Build.VERSION.RELEASE} by Pigeon"))
   }
 }
