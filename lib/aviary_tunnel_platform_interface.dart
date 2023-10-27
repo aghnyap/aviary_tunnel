@@ -1,6 +1,7 @@
+import 'dart:typed_data';
+
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
-import 'aviary_tunnel_default_method_channel.dart';
 import 'src/aviary_tunnel_messenger_channel.dart';
 
 abstract class AviaryTunnelPlatform extends PlatformInterface {
@@ -24,7 +25,7 @@ abstract class AviaryTunnelPlatform extends PlatformInterface {
     _instance = instance;
   }
 
-  Future<String?> getPlatformVersion() {
-    throw UnimplementedError('platformVersion() has not been implemented.');
+  Future<Uint8List?> sendMessage(Uint8List? message) {
+    throw UnimplementedError('sendMessage() has not been implemented.');
   }
 }

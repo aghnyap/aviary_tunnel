@@ -40,7 +40,7 @@ private func nilOrValue<T>(_ value: Any?) -> T? {
 
 /// Generated protocol from Pigeon that represents a handler of messages from Flutter.
 protocol MessengerHostApi {
-  func getPlatformVersion(completion: @escaping (Result<String?, Error>) -> Void)
+  func sendMessage(message: FlutterStandardTypedData?, completion: @escaping (Result<FlutterStandardTypedData?, Error>) -> Void)
 }
 
 /// Generated setup class from Pigeon to handle messages through the `binaryMessenger`.
@@ -48,10 +48,12 @@ class MessengerHostApiSetup {
   /// The codec used by MessengerHostApi.
   /// Sets up an instance of `MessengerHostApi` to handle messages through the `binaryMessenger`.
   static func setUp(binaryMessenger: FlutterBinaryMessenger, api: MessengerHostApi?) {
-    let getPlatformVersionChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.aviary_tunnel_messenger_api.MessengerHostApi.getPlatformVersion", binaryMessenger: binaryMessenger)
+    let sendMessageChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.aviary_tunnel_messenger_api.MessengerHostApi.sendMessage", binaryMessenger: binaryMessenger)
     if let api = api {
-      getPlatformVersionChannel.setMessageHandler { _, reply in
-        api.getPlatformVersion() { result in
+      sendMessageChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let messageArg: FlutterStandardTypedData? = nilOrValue(args[0])
+        api.sendMessage(message: messageArg) { result in
           switch result {
             case .success(let res):
               reply(wrapResult(res))
@@ -61,7 +63,7 @@ class MessengerHostApiSetup {
         }
       }
     } else {
-      getPlatformVersionChannel.setMessageHandler(nil)
+      sendMessageChannel.setMessageHandler(nil)
     }
   }
 }

@@ -27,12 +27,12 @@ class MessengerHostApi {
 
   static const MessageCodec<Object?> codec = StandardMessageCodec();
 
-  Future<String?> getPlatformVersion() async {
+  Future<Uint8List?> sendMessage(Uint8List? arg_message) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.aviary_tunnel_messenger_api.MessengerHostApi.getPlatformVersion', codec,
+        'dev.flutter.pigeon.aviary_tunnel_messenger_api.MessengerHostApi.sendMessage', codec,
         binaryMessenger: _binaryMessenger);
     final List<Object?>? replyList =
-        await channel.send(null) as List<Object?>?;
+        await channel.send(<Object?>[arg_message]) as List<Object?>?;
     if (replyList == null) {
       throw PlatformException(
         code: 'channel-error',
@@ -45,7 +45,7 @@ class MessengerHostApi {
         details: replyList[2],
       );
     } else {
-      return (replyList[0] as String?);
+      return (replyList[0] as Uint8List?);
     }
   }
 }

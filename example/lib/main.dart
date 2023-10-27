@@ -1,3 +1,4 @@
+import 'package:aviary_tunnel/gen/protos/message.pb.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
@@ -31,8 +32,8 @@ class _MyAppState extends State<MyApp> {
     // Platform messages may fail, so we use a try/catch PlatformException.
     // We also handle the message potentially returning null.
     try {
-      platformVersion =
-          await _aviaryTunnelPlugin.getPlatformVersion() ?? 'Unknown platform version';
+      final message = await _aviaryTunnelPlugin.sendMessage(null);
+      platformVersion = Message.fromBuffer(message!).body;
     } on PlatformException {
       platformVersion = 'Failed to get platform version.';
     }

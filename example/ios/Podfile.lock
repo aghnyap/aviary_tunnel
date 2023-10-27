@@ -1,14 +1,20 @@
 PODS:
   - aviary_tunnel (0.0.1):
     - Flutter
+    - SwiftProtobuf (~> 1.4)
   - Flutter (1.0.0)
   - integration_test (0.0.1):
     - Flutter
+  - SwiftProtobuf (1.24.0)
 
 DEPENDENCIES:
   - aviary_tunnel (from `.symlinks/plugins/aviary_tunnel/ios`)
   - Flutter (from `Flutter`)
   - integration_test (from `.symlinks/plugins/integration_test/ios`)
+
+SPEC REPOS:
+  trunk:
+    - SwiftProtobuf
 
 EXTERNAL SOURCES:
   aviary_tunnel:
@@ -19,9 +25,10 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/integration_test/ios"
 
 SPEC CHECKSUMS:
-  aviary_tunnel: 3dc9209e343c3a30d2531c96262b953c28545190
+  aviary_tunnel: 3aa02f4aaf6c05ecc332b2ab8a8605a99671ffb1
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   integration_test: 13825b8a9334a850581300559b8839134b124670
+  SwiftProtobuf: bcfd2bc231cf9ae552cdc7c4e877bd3b41fe57b1
 
 PODFILE CHECKSUM: 70d9d25280d0dd177a5f637cdb0f0b0b12c6a189
 

@@ -44,7 +44,7 @@ class FlutterError (
 
 /** Generated interface from Pigeon that represents a handler of messages from Flutter. */
 interface MessengerHostApi {
-  fun getPlatformVersion(callback: (Result<String?>) -> Unit)
+  fun sendMessage(message: ByteArray?, callback: (Result<ByteArray?>) -> Unit)
 
   companion object {
     /** The codec used by MessengerHostApi. */
@@ -55,10 +55,12 @@ interface MessengerHostApi {
     @Suppress("UNCHECKED_CAST")
     fun setUp(binaryMessenger: BinaryMessenger, api: MessengerHostApi?) {
       run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.aviary_tunnel_messenger_api.MessengerHostApi.getPlatformVersion", codec)
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.aviary_tunnel_messenger_api.MessengerHostApi.sendMessage", codec)
         if (api != null) {
-          channel.setMessageHandler { _, reply ->
-            api.getPlatformVersion() { result: Result<String?> ->
+          channel.setMessageHandler { message, reply ->
+            val args = message as List<Any?>
+            val messageArg = args[0] as ByteArray?
+            api.sendMessage(messageArg) { result: Result<ByteArray?> ->
               val error = result.exceptionOrNull()
               if (error != null) {
                 reply.reply(wrapError(error))

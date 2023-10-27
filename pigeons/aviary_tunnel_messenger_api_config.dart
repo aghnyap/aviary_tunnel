@@ -15,5 +15,5 @@ import 'package:pigeon/pigeon.dart';
 @HostApi()
 abstract class MessengerHostApi {
   @async
-  String? getPlatformVersion();
+  Uint8List? sendMessage(Uint8List? message);
 }
