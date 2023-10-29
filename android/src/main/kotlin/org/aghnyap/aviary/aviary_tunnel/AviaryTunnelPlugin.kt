@@ -1,5 +1,6 @@
 package org.aghnyap.aviary.aviary_tunnel
 
+import MessageOuterClass.Message
 import MessengerHostApi
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin
@@ -14,7 +15,12 @@ class AviaryTunnelPlugin: FlutterPlugin, MessengerHostApi {
     MessengerHostApi.setUp(binding.binaryMessenger, null)
   }
 
-  override fun sendMessage(message: ByteArray, callback: (Result<ByteArray?>) -> Unit) {
-    TODO("Not yet implemented")
+  override fun sendMessage(message: ByteArray?, callback: (Result<ByteArray?>) -> Unit) {
+    val message = Message.newBuilder().apply {
+      subject = "platform"
+      body = "Android ${android.os.Build.VERSION.RELEASE} by Pigeon with Protobuf"
+    }.build()
+
+    callback(Result.success(message.toByteArray()))
   }
 }
